@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { supabase } from "@/lib/supabase";
 
 const schema = z.object({
   fullName: z.string().min(2),
@@ -25,19 +26,20 @@ export async function POST(req: Request) {
     );
   }
 
-  const lead = parsed.data;
+  const { fullName, email, phone, budget, interest } = parsed.data;
 
-  // Placeholder — log to server console.
-  // TODO: Plug in CRM / email here. Examples:
-  //   - Resend:    await resend.emails.send({ ... })
-  //   - HubSpot:   await fetch("https://api.hubapi.com/...", { ... })
-  //   - Salesforce: write to Lead object via REST API
-  //   - Notion DB: await notion.pages.create({ ... })
-  // Use environment variables for any API keys (e.g. process.env.RESEND_API_KEY).
-  console.log("[lead] new submission", {
-    receivedAt: new Date().toISOString(),
-    ...lead,
+  const { error } = await supabase.from("leads").insert({
+    full_name: fullName,
+    email,
+    phone,
+    budget,
+    interest,
   });
+
+  if (error) {
+    console.error("[lead] insert failed", error);
+    return NextResponse.json({ ok: false, error: "Database error" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

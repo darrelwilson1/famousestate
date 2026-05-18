@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { supabase } from "@/lib/supabase";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -23,12 +24,12 @@ export async function POST(req: Request) {
     );
   }
 
-  // Placeholder — log to server console.
-  // TODO: Plug in CRM / email here (Resend, HubSpot, Salesforce, Notion, ...).
-  console.log("[message] new submission", {
-    receivedAt: new Date().toISOString(),
-    ...parsed.data,
-  });
+  const { error } = await supabase.from("messages").insert(parsed.data);
+
+  if (error) {
+    console.error("[message] insert failed", error);
+    return NextResponse.json({ ok: false, error: "Database error" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }

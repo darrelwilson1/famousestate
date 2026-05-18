@@ -5,3 +5,8 @@ node_modules
 *.log
 .vercel
 next-env.d.ts
+
+# Agent tooling (installed via `npx skills add ...`)
+.agents/
+.claude/skills/
+skills-lock.json
