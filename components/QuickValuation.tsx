@@ -11,7 +11,10 @@ const schema = z.object({
   name: z.string().min(2, "Please share your name."),
   email: z.string().email("That email looks off."),
   housePrice: z
-    .number({ invalid_type_error: "Enter a number." })
+    .number({
+      required_error: "Enter a price.",
+      invalid_type_error: "Enter a number.",
+    })
     .positive("Must be greater than zero."),
 });
 

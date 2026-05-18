@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const headline = ["Quiet", "luxury,", "loud", "results."];
 
 export default function Hero() {
-  const reduce = useReducedMotion();
-
   const wordVariants = {
     hidden: { y: "110%" },
     visible: (i: number) => ({
@@ -71,7 +69,7 @@ export default function Hero() {
               <span key={i} className="mask-reveal mr-[0.18em] last:mr-0">
                 <motion.span
                   custom={i}
-                  initial={reduce ? "visible" : "hidden"}
+                  initial="hidden"
                   animate="visible"
                   variants={wordVariants}
                   className={i === 1 ? "italic text-gold" : ""}
