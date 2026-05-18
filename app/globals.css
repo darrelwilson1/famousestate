@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0A0A0A;
+  --bone: #F5F1EA;
+  --gold: #B8935A;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-feature-settings: "ss01", "ss02", "salt";
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles scrolling */
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bone);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reveal helpers */
+.mask-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.mask-reveal > span {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+/* Form floating labels */
+.field {
+  position: relative;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(245, 241, 234, 0.25);
+  padding: 1.75rem 0 0.75rem 0;
+  color: var(--bone);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0;
+  appearance: none;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%23B8935A' stroke-width='1.2'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  padding-right: 1.5rem;
+}
+
+.field input:focus,
+.field select:focus {
+  border-bottom-color: var(--gold);
+}
+
+.field label {
+  position: absolute;
+  left: 0;
+  top: 1.75rem;
+  color: rgba(245, 241, 234, 0.5);
+  font-size: 1rem;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s;
+  letter-spacing: 0.01em;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field select:focus + label,
+.field select:not([data-empty="true"]) + label {
+  transform: translateY(-1.25rem) scale(0.72);
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.field option {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* Light variant of floating-label fields (QuickValuation) */
+.qv-field {
+  position: relative;
+}
+
+.qv-field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.18);
+  padding: 1.75rem 0 0.75rem 0;
+  color: var(--ink);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0;
+  appearance: none;
+}
+
+.qv-field input:focus {
+  border-bottom-color: var(--gold);
+}
+
+.qv-field label {
+  position: absolute;
+  left: 0;
+  top: 1.75rem;
+  color: rgba(10, 10, 10, 0.55);
+  font-size: 1rem;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s;
+  letter-spacing: 0.01em;
+}
+
+.qv-field input:focus + label,
+.qv-field input:not(:placeholder-shown) + label {
+  transform: translateY(-1.25rem) scale(0.72);
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Horizontal scroll for listings */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
